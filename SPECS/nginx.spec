@@ -98,6 +98,7 @@ Source9: nginx.check-reload.sh
 
 Source100: https://github.com/mailru/graphite-nginx-module/archive/v%{graphite_nginx_module_version}.tar.gz#/graphite-nginx-module-%{graphite_nginx_module_version}.tar.gz
 Source101: https://github.com/openresty/headers-more-nginx-module/archive/v%{headers_more_nginx_module_version}.tar.gz#/headers-more-nginx-module-%{headers_more_nginx_module_version}.tar.gz
+Patch100: ngx_http_variable_request_id.patch
 
 
 License: 2-clause BSD-like license
@@ -122,6 +123,7 @@ a mail proxy server.
 %setup -q -T -D -a 100
 %setup -q -T -D -a 101
 patch -p1 < %{bdir}/graphite-nginx-module-%{graphite_nginx_module_version}/graphite_module_v1_15_4.patch
+%patch100 -p1
 
 %build
 ./configure %{BASE_CONFIGURE_ARGS} \
