@@ -121,7 +121,6 @@ a mail proxy server.
 %setup -q -T -D -a 100
 %setup -q -T -D -a 101
 patch -p1 < %{bdir}/graphite-nginx-module-%{graphite_nginx_module_version}/graphite_module_v1_15_4.patch
-%patch100 -p1
 
 %build
 ./configure %{BASE_CONFIGURE_ARGS} \
