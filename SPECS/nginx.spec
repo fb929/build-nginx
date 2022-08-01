@@ -98,8 +98,6 @@ Source9: nginx.check-reload.sh
 
 Source100: https://github.com/mailru/graphite-nginx-module/archive/v%{graphite_nginx_module_version}.tar.gz#/graphite-nginx-module-%{graphite_nginx_module_version}.tar.gz
 Source101: https://github.com/openresty/headers-more-nginx-module/archive/v%{headers_more_nginx_module_version}.tar.gz#/headers-more-nginx-module-%{headers_more_nginx_module_version}.tar.gz
-Patch100: ngx_http_variable_request_id.patch
-
 
 License: 2-clause BSD-like license
 
