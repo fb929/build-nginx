@@ -1,0 +1,63 @@
+diff --git a/src/http/ngx_http_variables.c b/src/http/ngx_http_variables.c
+index fea5186..be1bbd8 100644
+--- a/src/http/ngx_http_variables.c
++++ b/src/http/ngx_http_variables.c
+@@ -2128,6 +2128,17 @@ ngx_http_variable_request_time(ngx_http_request_t *r,
+ }
+ 
+ 
++static const char _b58set[] = "123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ";
++
++void
++_pseudo_b58_dump(u_char *dst, u_char *src, size_t len)
++{
++    while (len--) {
++        *dst++ = _b58set[*src++ % 58];
++    }
++}
++
++
+ static ngx_int_t
+ ngx_http_variable_request_id(ngx_http_request_t *r,
+     ngx_http_variable_value_t *v, uintptr_t data)
+@@ -2135,10 +2146,10 @@ ngx_http_variable_request_id(ngx_http_request_t *r,
+     u_char  *id;
+ 
+ #if (NGX_OPENSSL)
+-    u_char   random_bytes[16];
++    u_char   random_bytes[10];
+ #endif
+ 
+-    id = ngx_pnalloc(r->pool, 32);
++    id = ngx_pnalloc(r->pool, 10);
+     if (id == NULL) {
+         return NGX_ERROR;
+     }
+@@ -2147,13 +2158,13 @@ ngx_http_variable_request_id(ngx_http_request_t *r,
+     v->no_cacheable = 0;
+     v->not_found = 0;
+ 
+-    v->len = 32;
++    v->len = 10;
+     v->data = id;
+ 
+ #if (NGX_OPENSSL)
+ 
+-    if (RAND_bytes(random_bytes, 16) == 1) {
+-        ngx_hex_dump(id, random_bytes, 16);
++    if (RAND_bytes(random_bytes, 10) == 1) {
++        _pseudo_b58_dump(id, random_bytes, 10);
+         return NGX_OK;
+     }
+ 
+@@ -2161,9 +2172,7 @@ ngx_http_variable_request_id(ngx_http_request_t *r,
+ 
+ #endif
+ 
+-    ngx_sprintf(id, "%08xD%08xD%08xD%08xD",
+-                (uint32_t) ngx_random(), (uint32_t) ngx_random(),
+-                (uint32_t) ngx_random(), (uint32_t) ngx_random());
++    ngx_sprintf(id, "__%08xD", (uint32_t) ngx_random());
+ 
+     return NGX_OK;
+ }
