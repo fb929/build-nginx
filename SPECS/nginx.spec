@@ -128,6 +128,7 @@ patch -p1 < %{bdir}/graphite-nginx-module-%{graphite_nginx_module_version}/graph
     --with-ld-opt="%{WITH_LD_OPT}" \
     --add-module=graphite-nginx-module-%{graphite_nginx_module_version} \
     --add-module=headers-more-nginx-module-%{headers_more_nginx_module_version} \
+    --with-http_geoip_module \
     --with-debug
 make %{?_smp_mflags}
 %{__mv} %{bdir}/objs/nginx \
@@ -137,6 +138,7 @@ make %{?_smp_mflags}
     --with-ld-opt="%{WITH_LD_OPT}" \
     --add-module=graphite-nginx-module-%{graphite_nginx_module_version} \
     --add-module=headers-more-nginx-module-%{headers_more_nginx_module_version} \
+    --with-http_geoip_module \
 
 make %{?_smp_mflags}
 
