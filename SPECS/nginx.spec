@@ -65,7 +65,7 @@ Requires(pre): shadow-utils
 # end of distribution specific definitions
 
 %define base_version 1.22.0
-%define base_release 2%{?dist}.fb
+%define base_release 3%{?dist}.fb
 
 %define bdir %{_builddir}/%{name}-%{base_version}
 
@@ -76,6 +76,7 @@ Requires(pre): shadow-utils
 
 %define graphite_nginx_module_version 4.2
 %define headers_more_nginx_module_version 0.32
+%define brotli_version 1.0.0rc
 
 Summary: High performance web server
 Name: nginx
@@ -98,6 +99,7 @@ Source9: nginx.check-reload.sh
 
 Source100: https://github.com/mailru/graphite-nginx-module/archive/v%{graphite_nginx_module_version}.tar.gz#/graphite-nginx-module-%{graphite_nginx_module_version}.tar.gz
 Source101: https://github.com/openresty/headers-more-nginx-module/archive/v%{headers_more_nginx_module_version}.tar.gz#/headers-more-nginx-module-%{headers_more_nginx_module_version}.tar.gz
+Source102: https://github.com/google/ngx_brotli/archive/refs/tags/v%{brotli_version}.tar.gz#/ngx_brotli-%{brotli_version}.tar.gz
 
 License: 2-clause BSD-like license
 
@@ -120,6 +122,7 @@ a mail proxy server.
 %autosetup -p1
 %setup -q -T -D -a 100
 %setup -q -T -D -a 101
+%setup -q -T -D -a 102
 patch -p1 < %{bdir}/graphite-nginx-module-%{graphite_nginx_module_version}/graphite_module_v1_15_4.patch
 
 %build
@@ -128,6 +131,7 @@ patch -p1 < %{bdir}/graphite-nginx-module-%{graphite_nginx_module_version}/graph
     --with-ld-opt="%{WITH_LD_OPT}" \
     --add-module=graphite-nginx-module-%{graphite_nginx_module_version} \
     --add-module=headers-more-nginx-module-%{headers_more_nginx_module_version} \
+    --add-module=ngx_brotli-%{brotli_version} \
     --with-http_geoip_module \
     --with-debug
 make %{?_smp_mflags}
@@ -138,6 +142,7 @@ make %{?_smp_mflags}
     --with-ld-opt="%{WITH_LD_OPT}" \
     --add-module=graphite-nginx-module-%{graphite_nginx_module_version} \
     --add-module=headers-more-nginx-module-%{headers_more_nginx_module_version} \
+    --add-module=ngx_brotli-%{brotli_version} \
     --with-http_geoip_module \
 
 make %{?_smp_mflags}
