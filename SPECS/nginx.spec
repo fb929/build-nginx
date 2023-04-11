@@ -65,7 +65,7 @@ Requires(pre): shadow-utils
 # end of distribution specific definitions
 
 %define base_version 1.22.0
-%define base_release 4%{?dist}.fb
+%define base_release 5%{?dist}.fb
 
 %define bdir %{_builddir}/%{name}-%{base_version}
 
@@ -148,6 +148,7 @@ make %{?_smp_mflags}
     --add-module=headers-more-nginx-module-%{headers_more_nginx_module_version} \
     --add-module=ngx_brotli-%{ngx_brotli_version} \
     --with-http_geoip_module \
+    --with-debug
 
 make %{?_smp_mflags}
 
