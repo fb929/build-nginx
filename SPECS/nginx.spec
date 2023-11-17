@@ -137,7 +137,6 @@ patch -p1 < %{bdir}/graphite-nginx-module-%{graphite_nginx_module_version}/graph
     --add-module=headers-more-nginx-module-%{headers_more_nginx_module_version} \
     --add-module=ngx_brotli-%{ngx_brotli_version} \
     --with-http_geoip_module \
-    --with-ngx_http_mirror_module \
     --with-debug
 make %{?_smp_mflags}
 %{__mv} %{bdir}/objs/nginx \
@@ -149,7 +148,6 @@ make %{?_smp_mflags}
     --add-module=headers-more-nginx-module-%{headers_more_nginx_module_version} \
     --add-module=ngx_brotli-%{ngx_brotli_version} \
     --with-http_geoip_module \
-    --with-ngx_http_mirror_module \
     --with-debug
 
 make %{?_smp_mflags}

@@ -1,10 +1,11 @@
 ---
-name: rpm build and release
-
 on:
-  release:
-    types:
-      - published
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+name: release
 
 jobs:
   build:
@@ -19,32 +20,11 @@ jobs:
         id: build
         uses: fb929/rpmbuild@master
 
-      - name: upload artifact
-        uses: actions/upload-artifact@v2
+      # create release and upload assets
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          name: packages
-          retention-days: 1
-          path: |
+          files: |
             /home/runner/work/_temp/_github_home/*.rpm
             /home/runner/work/_temp/_github_home/sha256sum
             /home/runner/work/_temp/_github_home/md5sum
-  upload:
-    needs: build
-    runs-on: ubuntu-latest
-    strategy:
-      matrix: ${{fromJson(needs.build.outputs.matrix)}}
-    steps:
-      - name: download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: packages
-      - name: upload ${{ matrix.file }}
-        id: upload
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ${{ matrix.file}}
-          asset_name: ${{ matrix.file}}
-          asset_content_type: application/octet-stream
