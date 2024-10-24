@@ -10,22 +10,27 @@ name: release
 jobs:
   build:
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.build.outputs.matrix }}
+    strategy:
+      matrix:
+        platform:
+          - linux/amd64
+          - linux/arm64
     steps:
       - name: check out repository code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: build RPM package
-        id: build
-        uses: fb929/rpmbuild@master
+        uses: fb929/rpmbuild@v1
+        with:
+          platform: ${{ matrix.platform }}
 
       # create release and upload assets
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
+          prerelease: true
           files: |
-            /home/runner/work/_temp/_github_home/*.rpm
-            /home/runner/work/_temp/_github_home/sha256sum
-            /home/runner/work/_temp/_github_home/md5sum
+            ./result/*.rpm
+            ./result/*.sha256sum
+            ./result/*.md5sum
