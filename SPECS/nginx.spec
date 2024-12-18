@@ -265,6 +265,8 @@ cat /dev/null > debugsourcefiles.list
 %doc %{_datadir}/doc/%{name}-%{base_version}/COPYRIGHT
 %{_mandir}/man8/nginx.8*
 
+%{_libdir}/nginx/modules/*.so
+
 %pre
 # Add the "nginx" user
 getent group %{nginx_group} >/dev/null || groupadd -r %{nginx_group}

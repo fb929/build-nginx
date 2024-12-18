@@ -14,7 +14,14 @@ jobs:
       matrix:
         platform:
           - linux/amd64
-          - linux/arm64
+          #- linux/arm64
+        include:
+          - arch: amd64
+            rpm_arch: x86_64
+            deb_arch: amd64
+          #- arch: arm64
+          #  rpm_arch: aarch64
+          #  deb_arch: arm64
     steps:
       - name: check out repository code
         uses: actions/checkout@v4
@@ -23,7 +30,7 @@ jobs:
         uses: fb929/rpmbuild@main
         with:
           platform: ${{ matrix.platform }}
-          pre-build-command: 'yum install -y rpm-build rpmdevtools gcc make coreutils python git rsync yum-utils GeoIP-devel https://github.com/fb929/build-libmaxminddb/releases/download/1.11.0-0/libmaxminddb-1.11.0-0.amzn2.x86_64.rpm'
+          pre-build-command: 'yum install -y rpm-build rpmdevtools gcc make coreutils python git rsync yum-utils GeoIP-devel https://github.com/fb929/build-libmaxminddb/releases/download/1.11.0-0/libmaxminddb-1.11.0-0.amzn2.${{ matrix.rpm_arch }}.rpm'
 
       # create release and upload assets
       - name: Release
