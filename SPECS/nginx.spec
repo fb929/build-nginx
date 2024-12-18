@@ -78,6 +78,7 @@ Requires(pre): shadow-utils
 %define headers_more_nginx_module_version 0.32
 %define ngx_brotli_version 1.0.0rc
 %define brotli_version 1.0.9
+%define ngx_http_geoip2 3.4
 
 Summary: High performance web server
 Name: nginx
@@ -102,6 +103,7 @@ Source100: https://github.com/mailru/graphite-nginx-module/archive/v%{graphite_n
 Source101: https://github.com/openresty/headers-more-nginx-module/archive/v%{headers_more_nginx_module_version}.tar.gz#/headers-more-nginx-module-%{headers_more_nginx_module_version}.tar.gz
 Source102: https://github.com/google/ngx_brotli/archive/refs/tags/v%{ngx_brotli_version}.tar.gz#/ngx_brotli-%{ngx_brotli_version}.tar.gz
 Source103: https://github.com/google/brotli/archive/refs/tags/v%{brotli_version}.tar.gz
+Source104: https://github.com/leev/ngx_http_geoip2_module/archive/%{ngx_http_geoip2}.tar.gz
 
 License: 2-clause BSD-like license
 
@@ -128,6 +130,7 @@ a mail proxy server.
 %setup -q -T -D -a 103
 cp -rp brotli-%{brotli_version}/* ngx_brotli-%{ngx_brotli_version}/deps/brotli/
 patch -p1 < %{bdir}/graphite-nginx-module-%{graphite_nginx_module_version}/graphite_module_v1_15_4.patch
+%setup -q -T -D -a 104
 
 %build
 ./configure %{BASE_CONFIGURE_ARGS} \
@@ -136,6 +139,7 @@ patch -p1 < %{bdir}/graphite-nginx-module-%{graphite_nginx_module_version}/graph
     --add-module=graphite-nginx-module-%{graphite_nginx_module_version} \
     --add-module=headers-more-nginx-module-%{headers_more_nginx_module_version} \
     --add-module=ngx_brotli-%{ngx_brotli_version} \
+    --add-dynamic-module=ngx_http_geoip2_module-%{ngx_http_geoip2} \
     --with-http_geoip_module \
     --with-debug
 make %{?_smp_mflags}
@@ -147,6 +151,7 @@ make %{?_smp_mflags}
     --add-module=graphite-nginx-module-%{graphite_nginx_module_version} \
     --add-module=headers-more-nginx-module-%{headers_more_nginx_module_version} \
     --add-module=ngx_brotli-%{ngx_brotli_version} \
+    --add-dynamic-module=ngx_http_geoip2_module-%{ngx_http_geoip2} \
     --with-http_geoip_module \
     --with-debug
 
