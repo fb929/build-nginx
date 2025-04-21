@@ -19,9 +19,11 @@ jobs:
           - platform: linux/amd64
             rpm_arch: x86_64
             deb_arch: amd64
+            docker-image: "amazonlinux:2"
           - platform: linux/arm64
             rpm_arch: aarch64
             deb_arch: arm64
+            docker-image: "amazonlinux:2"
     steps:
       - name: check out repository code
         uses: actions/checkout@v4
@@ -30,6 +32,7 @@ jobs:
         uses: fb929/rpmbuild@v1
         with:
           platform: ${{ matrix.platform }}
+          docker-image: ${{ matrix.docker-image }}
           pre-build-command: 'yum install -y rpm-build rpmdevtools gcc make coreutils python git rsync yum-utils GeoIP-devel https://github.com/fb929/build-libmaxminddb/releases/download/1.11.0-0/libmaxminddb-1.11.0-0.amzn2.${{ matrix.rpm_arch }}.rpm'
 
       # create release and upload assets
