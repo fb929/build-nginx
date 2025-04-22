@@ -14,16 +14,20 @@ jobs:
       matrix:
         platform:
           - linux/amd64
-          - linux/arm64
+          #- linux/arm64
         include:
           - platform: linux/amd64
             rpm_arch: x86_64
             deb_arch: amd64
             docker-image: "amazonlinux:2"
-          - platform: linux/arm64
-            rpm_arch: aarch64
-            deb_arch: arm64
-            docker-image: "amazonlinux:2"
+          #- platform: linux/arm64
+          #  rpm_arch: aarch64
+          #  deb_arch: arm64
+          #  docker-image: "amazonlinux:2"
+          - platform: linux/amd64
+            rpm_arch: x86_64
+            deb_arch: amd64
+            docker-image: "almalinux:9"
     steps:
       - name: check out repository code
         uses: actions/checkout@v4
