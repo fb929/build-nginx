@@ -1,11 +1,11 @@
 ---
+name: release
+
 on:
   push:
     # Sequence of patterns matched against refs/tags
     tags:
       - '*' # Push any events
-
-name: release
 
 jobs:
   build:
