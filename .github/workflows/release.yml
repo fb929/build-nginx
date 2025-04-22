@@ -17,6 +17,7 @@ jobs:
             rpm_arch: x86_64
             deb_arch: amd64
             docker-image: "amazonlinux:2"
+            pre-build-command: 'yum install -y rpm-build rpmdevtools gcc make coreutils python git rsync yum-utils GeoIP-devel https://github.com/fb929/build-libmaxminddb/releases/download/1.11.0-0/libmaxminddb-1.11.0-0.amzn2.${{ matrix.rpm_arch }}.rpm'
           #- platform: linux/arm64
           #  rpm_arch: aarch64
           #  deb_arch: arm64
@@ -25,16 +26,17 @@ jobs:
             rpm_arch: x86_64
             deb_arch: amd64
             docker-image: "almalinux:9"
+            pre-build-command: 'yum install -y http://www6.atomicorp.com/channels/atomic/centos/9/x86_64/RPMS/atomic-release-1.0-23.el9.art.noarch.rpm && yum install -y rpm-build rpmdevtools gcc make coreutils python git rsync yum-utils GeoIP-devel https://github.com/fb929/build-libmaxminddb/releases/download/1.11.0-0/libmaxminddb-1.11.0-0.amzn2.${{ matrix.rpm_arch }}.rpm'
     steps:
       - name: check out repository code
         uses: actions/checkout@v4
 
       - name: build RPM package
-        uses: fb929/rpmbuild@v1
+        uses: fb929/rpmbuild@main
         with:
           platform: ${{ matrix.platform }}
           docker-image: ${{ matrix.docker-image }}
-          pre-build-command: 'yum install -y rpm-build rpmdevtools gcc make coreutils python git rsync yum-utils GeoIP-devel https://github.com/fb929/build-libmaxminddb/releases/download/1.11.0-0/libmaxminddb-1.11.0-0.amzn2.${{ matrix.rpm_arch }}.rpm'
+          pre-build-command: ${{ matrix.pre-build-command }}
 
       # create release and upload assets
       - name: Release
