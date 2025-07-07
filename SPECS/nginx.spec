@@ -23,7 +23,7 @@ BuildRequires: openssl-devel >= 1.0.2
 %endif
 
 %if (0%{?rhel} == 7) && (0%{?amzn} == 2)
-%define epoch 1
+%define epoch 3
 Epoch: %{epoch}
 Requires(pre): shadow-utils
 Requires: openssl11 >= 1.1.1
@@ -31,7 +31,7 @@ BuildRequires: openssl11-devel >= 1.1.1
 %endif
 
 %if 0%{?rhel} == 8
-%define epoch 1
+%define epoch 3
 Epoch: %{epoch}
 Requires(pre): shadow-utils
 BuildRequires: openssl-devel >= 1.1.1
@@ -39,7 +39,7 @@ BuildRequires: openssl-devel >= 1.1.1
 %endif
 
 %if 0%{?rhel} == 9
-%define epoch 1
+%define epoch 3
 Epoch: %{epoch}
 Requires(pre): shadow-utils
 BuildRequires: openssl-devel
