@@ -14,7 +14,7 @@ Requires(postun): systemd
 %endif
 
 %if (0%{?rhel} == 7) && (0%{?amzn} == 0)
-%define epoch 1
+%define epoch 3
 Epoch: %{epoch}
 Requires(pre): shadow-utils
 Requires: openssl >= 1.0.2
@@ -65,7 +65,7 @@ Requires(pre): shadow-utils
 # end of distribution specific definitions
 
 %define base_version 1.22.1
-%define base_release 2%{?dist}.fb
+%define base_release 3%{?dist}.fb
 
 %define bdir %{_builddir}/%{name}-%{base_version}
 
