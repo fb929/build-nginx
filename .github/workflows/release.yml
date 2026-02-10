@@ -31,7 +31,7 @@ jobs:
             rpm_arch: aarch64
             deb_arch: arm64
             docker-image: "almalinux:9"
-            pre-build-command: 'yum install -y https://rpms.remirepo.net/enterprise/9/remi/aarch64/remi-release-9.7-4.el9.remi.noarch.rpm; dnf install --allowerasing -y rpm-build rpmdevtools gcc make coreutils python git rsync yum-utils GeoIP-devel https://github.com/fb929/build-libmaxminddb/releases/download/1.11.0-0/libmaxminddb-1.11.0-0.amzn2.aarch64.rpm bsdtar; echo "%__tar /usr/bin/bsdtar" >> /root/.rpmmacros'
+            pre-build-command: 'yum install -y https://rpms.remirepo.net/enterprise/9/remi/aarch64/remi-release-9.7-4.el9.remi.noarch.rpm; dnf install --allowerasing -y rpm-build rpmdevtools gcc make coreutils python git rsync yum-utils GeoIP-devel https://github.com/fb929/build-libmaxminddb/releases/download/1.11.0-0/libmaxminddb-1.11.0-0.amzn2.aarch64.rpm bsdtar; echo %__tar /usr/bin/bsdtar >> /root/.rpmmacros'
     steps:
       - name: check out repository code
         uses: actions/checkout@v4
